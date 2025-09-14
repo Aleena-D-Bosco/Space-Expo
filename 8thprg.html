@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Leap Year Checker</title>
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        margin: 0;
+      }
+
+      .box {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 40px;
+        text-align: center;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+        width: 400px;
+        animation: fadeIn 1.2s ease;
+      }
+
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: #00ffe0;
+        text-shadow: 0 0 10px #00ffe0, 0 0 20px #00ffe0;
+        animation: glow 1.5s infinite alternate;
+      }
+
+      @keyframes glow {
+        from {
+          text-shadow: 0 0 10px #00ffe0, 0 0 20px #00ffe0;
+        }
+        to {
+          text-shadow: 0 0 20px #00ffae, 0 0 40px #00ffae;
+        }
+      }
+
+      input {
+        padding: 12px;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        font-size: 1rem;
+        width: 70%;
+        margin-bottom: 15px;
+        text-align: center;
+      }
+
+      button {
+        padding: 12px 20px;
+        background: #00ffe0;
+        color: #000;
+        border: none;
+        border-radius: 10px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+        margin-top: 10px;
+      }
+
+      button:hover {
+        background: #00c7a6;
+        transform: scale(1.05);
+      }
+
+      #result {
+        margin-top: 20px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        padding: 15px;
+        border-radius: 10px;
+        background: rgba(0, 0, 0, 0.3);
+        display: inline-block;
+        min-width: 220px;
+      }
+
+      .success {
+        color: #00ffae;
+      }
+
+      .error {
+        color: #ff7676;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Confetti animation */
+      .confetti {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: randomColor;
+        animation: fall 3s linear forwards;
+      }
+
+      @keyframes fall {
+        to {
+          transform: translateY(100vh) rotate(720deg);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <h1>🌍 Leap Year Checker</h1>
+      <input type="number" id="yearInput" placeholder="Enter a year" />
+      <br />
+      <button onclick="checkLeapYear()">Check Leap Year</button>
+      <p id="result"></p>
+    </div>
+
+    <script>
+      function checkLeapYear() {
+        const year = document.getElementById("yearInput").value;
+        const result = document.getElementById("result");
+
+        if (!year) {
+          result.textContent = "⚠️ Please enter a year!";
+          result.className = "error";
+          return;
+        }
+
+        if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {
+          result.textContent = `🎉 ${year} is a Leap Year ✅`;
+          result.className = "success";
+          launchConfetti();
+        } else {
+          result.textContent = `❌ ${year} is NOT a Leap Year`;
+          result.className = "error";
+        }
+      }
+
+      function launchConfetti() {
+        for (let i = 0; i < 30; i++) {
+          const confetti = document.createElement("div");
+          confetti.classList.add("confetti");
+          confetti.style.left = Math.random() * window.innerWidth + "px";
+          confetti.style.backgroundColor =
+            "hsl(" + Math.random() * 360 + ", 100%, 50%)";
+          document.body.appendChild(confetti);
+
+          setTimeout(() => confetti.remove(), 3000);
+        }
+      }
+    </script>
+  </body>
+</html>

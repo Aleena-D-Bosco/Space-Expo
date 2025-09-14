@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Styled Text Tags</title>
+    <link rel="stylesheet" href="styles1.css" />
+    <style>
+      body {
+        margin: 0;
+        padding: 40px;
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #1e3c72, #2a5298);
+        color: #f1f1f1;
+        line-height: 1.8;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 3rem;
+        margin-bottom: 20px;
+        color: #ffdd57;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+      }
+
+      h2 {
+        margin-top: 40px;
+        font-size: 2rem;
+        color: #38bdf8;
+        border-bottom: 3px solid #38bdf8;
+        display: inline-block;
+        padding-bottom: 5px;
+      }
+
+      p {
+        font-size: 1.1rem;
+        margin: 15px 0;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 12px 18px;
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      strong {
+        color: #ff7f50;
+      }
+
+      em {
+        color: #ffd700;
+      }
+
+      u {
+        text-decoration: none;
+        border-bottom: 2px dashed #f87171;
+        padding-bottom: 2px;
+      }
+
+      blockquote {
+        font-style: italic;
+        font-size: 1.3rem;
+        background: rgba(250, 242, 101, 0.909);
+        padding: 20px;
+        border-left: 5px solid #ffdd57;
+        border-radius: 8px;
+        margin: 25px 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      }
+
+      code {
+        background: #111827;
+        color: #38f9d7;
+        font-family: "Courier New", monospace;
+        padding: 3px 6px;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+      }
+
+      iframe {
+        display: block;
+        margin: 40px auto;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        transition: transform 0.3s ease;
+      }
+
+      iframe:hover {
+        transform: scale(1.02);
+      }
+
+      /* Animation for fade-in */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(15px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      body > * {
+        animation: fadeIn 1s ease forwards;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🌟 My Cool Website 🌟</h1>
+
+    <h2>About This Page</h2>
+    <p>
+      This page is styled using an external <strong>CSS stylesheet</strong>. It
+      uses various <em>HTML text tags</em> to showcase styling.
+    </p>
+
+    <h2>Examples of Tags</h2>
+    <p>
+      Here's an example of <strong>bold</strong>, <em>italic</em>, and
+      <u>underlined</u> text.
+    </p>
+
+    <blockquote>
+      “Design is not just what it looks like and feels like. Design is how it
+      works.” – Steve Jobs
+    </blockquote>
+
+    <p>
+      When you need to show code, use the <code>&lt;code&gt;</code> tag like
+      this: <code>console.log("Hello world!")</code>
+    </p>
+
+    <iframe
+      src="https://assets.pinterest.com/ext/embed.html?id=456974693460059921"
+      height="475"
+      width="600"
+      frameborder="0"
+      scrolling="no"
+    ></iframe>
+  </body>
+</html>

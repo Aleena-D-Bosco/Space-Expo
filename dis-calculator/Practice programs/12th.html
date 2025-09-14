@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Delete Last List Item</title>
+  </head>
+  <body>
+    <ul id="itemList">
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+      <li>Item 4</li>
+    </ul>
+    <button id="deleteBtn">Delete Last Item</button>
+
+    <script>
+      document
+        .getElementById("deleteBtn")
+        .addEventListener("click", function () {
+          var list = document.getElementById("itemList");
+          if (list.children.length > 0) {
+            list.removeChild(list.lastElementChild);
+          }
+        });
+    </script>
+  </body>
+</html>

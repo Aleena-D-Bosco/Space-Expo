@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BCA 3rd Sem Timetable</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=VT323&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 2rem;
+      font-family: 'VT323', monospace;
+      background: radial-gradient(circle at top, rgba(155, 89, 255, 0.15), transparent 40%),
+                  radial-gradient(circle at bottom, rgba(0, 255, 210, 0.1), transparent 40%),
+                  #0a0a1a;
+      color: #fff;
+      overflow-x: auto;
+    }
+
+    caption {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #00ffd2;
+      text-shadow: 0 0 12px rgba(0, 255, 210, 0.6);
+      letter-spacing: 2px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 2px solid rgba(0, 255, 210, 0.3);
+      box-shadow: 0 0 25px rgba(155, 89, 255, 0.3),
+                  0 0 50px rgba(0, 255, 210, 0.15) inset;
+      background-color: rgba(20, 20, 40, 0.8);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th, td {
+      border: 1px solid rgba(155, 89, 255, 0.3);
+      padding: 14px;
+      text-align: center;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    th {
+      background: linear-gradient(90deg, rgba(0, 255, 210, 0.15), rgba(155, 89, 255, 0.15));
+      color: #00ffd2;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+    }
+
+    td {
+      background-color: rgba(15, 15, 35, 0.7);
+      color: #e6ffe6;
+    }
+
+    td:hover {
+      background-color: rgba(155, 89, 255, 0.2);
+      color: #fff;
+      box-shadow: 0 0 15px rgba(155, 89, 255, 0.5);
+      transform: scale(1.05);
+    }
+
+    td[rowspan] {
+      writing-mode: vertical-lr;
+      text-orientation: mixed;
+      font-weight: bold;
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(180deg, #ff0077, #00ffd2);
+      color: #fff;
+      text-shadow: 0 0 8px #000;
+      letter-spacing: 2px;
+      animation: pulse 3s infinite alternate;
+    }
+
+    td[colspan] {
+      background: rgba(0, 255, 210, 0.08);
+      color: #00ffd2;
+      font-weight: bold;
+    }
+
+    /* Neon pulse effect */
+    @keyframes pulse {
+      0% { box-shadow: 0 0 10px #ff0077; }
+      100% { box-shadow: 0 0 20px #00ffd2; }
+    }
+  </style>
+</head>
+<body>
+  <table>
+    <caption>BCA 3rd Sem — Cosmic Timetable 🚀</caption>
+    <tr>
+      <th>Day</th>
+      <th>10:10 - 11:00</th>
+      <th>11:05 - 11:55</th>
+      <th>12:00 - 12:50</th>
+      <th>12:50 - 1:50</th>
+      <th>1:50 - 2:40</th>
+      <th>2:45 - 3:35</th>
+      <th>3:40 - 4:30</th>
+    </tr>
+    <tr>
+      <th>Monday</th>
+      <td>Lang<br>(s/f/g)</td>
+      <td></td>
+      <td>GE</td>
+      <td rowspan="6">LUNCH</td>
+      <td colspan="2">DBMS Lab<br>B1:lab1 · B2:lab2</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>Tuesday</th>
+      <td>Lang<br>(s/f/g)</td>
+      <td>DBMS</td>
+      <td>GE</td>
+      <td>DBMS</td>
+      <td>AI</td>
+      <td>COA</td>
+    </tr>
+    <tr>
+      <th>Wednesday</th>
+      <td>Lang<br>(s/f/g)</td>
+      <td>MDE</td>
+      <td>GE</td>
+      <td>COA</td>
+      <td>DBMS</td>
+      <td>Web Tech</td>
+    </tr>
+    <tr>
+      <th>Thursday</th>
+      <td></td>
+      <td>Web Tech</td>
+      <td>Lang<br>(H/K/AE)</td>
+      <td>COA</td>
+      <td>AI</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>Friday</th>
+      <td>Web Tech</td>
+      <td>MDE</td>
+      <td>Lang<br>(H/K/AE)</td>
+      <td colspan="2">Web Tech Lab<br>B1:lab1 · B2:lab2</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>Saturday</th>
+      <td>Lib</td>
+      <td>AI</td>
+      <td>Lang<br>(H/K/AE)</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+</body>
+</html>

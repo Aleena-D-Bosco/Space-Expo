@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🏨 Hotel Reservation</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@400;600&display=swap");
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
+        color: #f9fafb;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .form-container {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(15px);
+        padding: 2.5rem;
+        border-radius: 20px;
+        box-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
+        width: 100%;
+        max-width: 550px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        animation: floaty 3s ease-in-out infinite alternate;
+      }
+
+      @keyframes floaty {
+        from {
+          transform: translateY(0px);
+        }
+        to {
+          transform: translateY(-10px);
+        }
+      }
+
+      h1 {
+        text-align: center;
+        color: #38bdf8;
+        margin-bottom: 1.5rem;
+        font-family: "Orbitron", sans-serif;
+        text-shadow: 0 0 12px #0ea5e9, 0 0 20px #38bdf8;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="date"],
+      input[type="time"],
+      input[type="number"] {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 1rem;
+        border: 1px solid #334155;
+        border-radius: 10px;
+        background: rgba(15, 23, 42, 0.6);
+        color: #f9fafb;
+        font-size: 1rem;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+
+      input:focus {
+        border-color: #38bdf8;
+        box-shadow: 0 0 10px #0ea5e9;
+      }
+
+      .radio-group {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 1rem;
+        padding: 10px;
+        border: 1px solid #334155;
+        border-radius: 10px;
+        background: rgba(15, 23, 42, 0.6);
+      }
+
+      .radio-group label {
+        display: flex;
+        align-items: center;
+        color: #e2e8f0;
+        cursor: pointer;
+      }
+
+      input[type="radio"] {
+        margin-right: 8px;
+        accent-color: #38bdf8;
+      }
+
+      button[type="submit"] {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #0ea5e9, #2563eb);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 1rem;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+      }
+
+      button[type="submit"]:hover {
+        background: linear-gradient(135deg, #2563eb, #0ea5e9);
+        transform: translateY(-3px);
+        box-shadow: 0 0 25px rgba(56, 189, 248, 0.9);
+      }
+
+      /* Messages */
+      #messages {
+        margin-top: 15px;
+        padding: 12px;
+        border-radius: 10px;
+        display: none;
+        font-size: 0.95rem;
+      }
+
+      #messages.error {
+        background: rgba(255, 0, 76, 0.1);
+        border: 1px solid #ff004c;
+        color: #ff4d6d;
+        display: block;
+      }
+
+      #messages.success {
+        background: rgba(0, 255, 157, 0.1);
+        border: 1px solid #00ff9d;
+        color: #00ffa3;
+        display: block;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="form-container">
+      <h1>🏨 Hotel Reservation</h1>
+      <form id="reservationForm" novalidate>
+        <label for="name">Name:</label>
+        <input type="text" id="name" placeholder="Enter your name" required />
+
+        <label for="phno">Phone Number:</label>
+        <input type="text" id="phno" placeholder="9876543210" required />
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" placeholder="example@gmail.com" required />
+
+        <label for="date">Date:</label>
+        <input type="date" id="date" required />
+
+        <label for="time">Time:</label>
+        <input type="time" id="time" required />
+
+        <label for="people">No. of People:</label>
+        <input type="number" id="people" placeholder="e.g. 2" required max="10" min="1" />
+
+        <label>Type of Service:</label>
+        <div class="radio-group">
+          <label><input type="radio" name="service" value="regular" required /> Regular</label>
+          <label><input type="radio" name="service" value="business" /> Business</label>
+          <label><input type="radio" name="service" value="vip" /> VIP</label>
+        </div>
+
+        <button type="submit">🚀 Book Now</button>
+        <div id="messages"></div>
+      </form>
+    </div>
+
+    <script>
+      // Validation functions
+      function validateName(name) {
+        return name.trim().length >= 3 ? "" : "⚠️ Name must be at least 3 characters.";
+      }
+      function validatePhone(phone) {
+        const phonePattern = /^[0-9]{10}$/;
+        return phonePattern.test(phone.trim()) ? "" : "⚠️ Enter a valid 10-digit phone number.";
+      }
+      function validateEmail(email) {
+        const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,}$/;
+        return emailPattern.test(email.trim()) ? "" : "⚠️ Enter a valid email address.";
+      }
+      function validateDate(dateValue) {
+        if (!dateValue) return "⚠️ Please select a date.";
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const selectedDate = new Date(dateValue);
+        return selectedDate >= today ? "" : "⚠️ Date cannot be in the past.";
+      }
+      function validateTime(time) {
+        return time ? "" : "⚠️ Please select a time.";
+      }
+      function validatePeople(people) {
+        return people >= 1 && people <= 10 ? "" : "⚠️ Number of people must be between 1 and 10.";
+      }
+      function validateService(service) {
+        return service ? "" : "⚠️ Please select a service type.";
+      }
+
+      // Form submit event
+      document.getElementById("reservationForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        let errors = [];
+
+        const name = document.getElementById("name").value;
+        const phone = document.getElementById("phno").value;
+        const email = document.getElementById("email").value;
+        const dateValue = document.getElementById("date").value;
+        const time = document.getElementById("time").value;
+        const people = document.getElementById("people").value;
+        const service = document.querySelector('input[name="service"]:checked');
+
+        errors.push(validateName(name));
+        errors.push(validatePhone(phone));
+        errors.push(validateEmail(email));
+        errors.push(validateDate(dateValue));
+        errors.push(validateTime(time));
+        errors.push(validatePeople(people));
+        errors.push(validateService(service));
+
+        errors = errors.filter((msg) => msg !== "");
+
+        const msgBox = document.getElementById("messages");
+        if (errors.length > 0) {
+          msgBox.className = "error";
+          msgBox.innerHTML = errors.join("<br>");
+        } else {
+          msgBox.className = "success";
+          msgBox.innerHTML = "✅ Reservation submitted successfully!";
+        }
+      });
+    </script>
+  </body>
+</html>

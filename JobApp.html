@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🚀 Futuristic Job Application</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap");
+
+      body {
+        font-family: "Orbitron", sans-serif;
+        background: radial-gradient(circle at top, #0f172a, #020617);
+        color: #f0faff;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      form {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(15px);
+        padding: 2.5rem;
+        border-radius: 20px;
+        box-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
+        width: 100%;
+        max-width: 550px;
+        border: 1px solid rgba(0, 200, 255, 0.3);
+        animation: floaty 3s ease-in-out infinite alternate;
+      }
+
+      @keyframes floaty {
+        from {
+          transform: translateY(0px);
+        }
+        to {
+          transform: translateY(-8px);
+        }
+      }
+
+      h1 {
+        text-align: center;
+        color: #38bdf8;
+        margin-bottom: 1.8rem;
+        text-shadow: 0 0 12px #0ea5e9, 0 0 20px #38bdf8;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="tel"],
+      select,
+      input[type="file"] {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 1.2rem;
+        border: 1px solid #334155;
+        border-radius: 10px;
+        background: rgba(15, 23, 42, 0.6);
+        color: #f0faff;
+        font-size: 1rem;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+
+      input:focus,
+      select:focus {
+        border-color: #38bdf8;
+        box-shadow: 0 0 10px #0ea5e9;
+      }
+
+      input[type="file"] {
+        padding: 8px;
+        cursor: pointer;
+      }
+
+      input[type="checkbox"] {
+        margin-right: 10px;
+        transform: scale(1.2);
+        accent-color: #38bdf8;
+      }
+
+      label[for="confirm"] {
+        display: flex;
+        align-items: center;
+        font-weight: normal;
+        margin-top: 1rem;
+        cursor: pointer;
+      }
+
+      input[type="submit"] {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #0ea5e9, #2563eb);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 1.5rem;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+      }
+
+      input[type="submit"]:hover {
+        background: linear-gradient(135deg, #2563eb, #0ea5e9);
+        transform: translateY(-3px);
+        box-shadow: 0 0 25px rgba(56, 189, 248, 0.9);
+      }
+
+      /* Error + success messages */
+      #messages {
+        margin-top: 15px;
+        padding: 12px;
+        border-radius: 8px;
+        display: none;
+        font-size: 0.95rem;
+      }
+
+      #messages.error {
+        background: rgba(255, 0, 76, 0.1);
+        border: 1px solid #ff004c;
+        color: #ff4d6d;
+        display: block;
+      }
+
+      #messages.success {
+        background: rgba(0, 255, 157, 0.1);
+        border: 1px solid #00ff9d;
+        color: #00ffa3;
+        display: block;
+      }
+
+      /* Starfield effect */
+      .stars {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        background: transparent
+          url("https://www.transparenttextures.com/patterns/stardust.png")
+          repeat;
+        animation: moveStars 200s linear infinite;
+      }
+
+      @keyframes moveStars {
+        from {
+          background-position: 0 0;
+        }
+        to {
+          background-position: -10000px 5000px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stars"></div>
+    <form id="jobForm" novalidate>
+      <h1>🚀 Job Application Portal</h1>
+
+      <label for="name">Full Name</label>
+      <input type="text" id="name" placeholder="John Wick" required />
+
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        placeholder="example@domain.com"
+        required
+      />
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" placeholder="9876543210" required />
+
+      <label for="role">Role Applying For</label>
+      <select id="role" required>
+        <option value="">Select Role</option>
+        <option>Frontend Developer</option>
+        <option>Backend Developer</option>
+        <option>Full Stack Developer</option>
+        <option>Data Analyst</option>
+      </select>
+
+      <label for="resume">Upload Resume</label>
+      <input type="file" id="resume" accept=".pdf,.doc,.docx" required />
+
+      <label for="confirm">
+        <input type="checkbox" id="confirm" required />
+        I confirm all information is true to the best of my knowledge.
+      </label>
+
+      <input type="submit" value="🚀 Submit Application" />
+
+      <div id="messages"></div>
+    </form>
+
+    <script>
+      function validateName(name) {
+        return name.trim().length >= 3
+          ? ""
+          : "⚠️ Name must be at least 3 characters.";
+      }
+
+      function validateEmail(email) {
+        const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,}$/;
+        return emailPattern.test(email.trim())
+          ? ""
+          : "⚠️ Enter a valid email address.";
+      }
+
+      function validatePhone(phone) {
+        const phonePattern = /^[0-9]{10}$/;
+        return phonePattern.test(phone.trim())
+          ? ""
+          : "⚠️ Enter a valid 10-digit phone number.";
+      }
+
+      function validateRole(role) {
+        return role ? "" : "⚠️ Please select a role.";
+      }
+
+      function validateResume(file) {
+        return file ? "" : "⚠️ Please upload your resume.";
+      }
+
+      function validateConfirm(checked) {
+        return checked ? "" : "⚠️ You must confirm the information.";
+      }
+
+      document
+        .getElementById("jobForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          let errors = [];
+
+          const name = document.getElementById("name").value;
+          const email = document.getElementById("email").value;
+          const phone = document.getElementById("phone").value;
+          const role = document.getElementById("role").value;
+          const resume = document.getElementById("resume").value;
+          const confirm = document.getElementById("confirm").checked;
+
+          errors.push(validateName(name));
+          errors.push(validateEmail(email));
+          errors.push(validatePhone(phone));
+          errors.push(validateRole(role));
+          errors.push(validateResume(resume));
+          errors.push(validateConfirm(confirm));
+
+          errors = errors.filter((msg) => msg !== "");
+
+          const msgBox = document.getElementById("messages");
+          if (errors.length > 0) {
+            msgBox.className = "error";
+            msgBox.innerHTML = errors.join("<br>");
+          } else {
+            msgBox.className = "success";
+            msgBox.innerHTML = "✅ Application submitted successfully!";
+          }
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hotel Reservation</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Karla:wght@300;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(circle at top, rgba(255, 0, 120, 0.2), transparent 50%),
+                  radial-gradient(circle at bottom, rgba(0, 255, 210, 0.15), transparent 50%),
+                  #0d0d1f;
+      color: #f5f5dc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      font-family: "Karla", sans-serif;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 25px;
+      font-family: "Orbitron", sans-serif;
+      color: #00ffd2;
+      text-shadow: 0 0 12px rgba(0, 255, 210, 0.6);
+      letter-spacing: 2px;
+    }
+
+    .form-container {
+      background: rgba(20, 20, 40, 0.85);
+      padding: 40px;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 0 25px rgba(155, 89, 255, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .form-container:hover {
+      transform: perspective(1000px) rotateX(1deg) rotateY(-1deg);
+    }
+
+    form label {
+      font-size: 16px;
+      margin-bottom: 8px;
+      display: block;
+      color: #e6ffe6;
+    }
+
+    form input[type="text"],
+    form input[type="email"],
+    form input[type="number"],
+    form input[type="date"],
+    form input[type="time"] {
+      width: 100%;
+      padding: 10px 14px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #1a1a2e;
+      color: #f5f5dc;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    form input:focus {
+      background-color: #121226;
+      box-shadow: 0 0 10px rgba(0, 255, 210, 0.5);
+      border: 1px solid #00ffd2;
+    }
+
+    form input::placeholder {
+      color: #ccc;
+      opacity: 0.7;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 20px;
+      margin: 10px 0 20px;
+    }
+
+    .radio-group label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 15px;
+      color: #e6ffe6;
+    }
+
+    input[type="radio"] {
+      accent-color: #00ffd2;
+    }
+
+    button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(90deg, #00ffd2, #ff0077);
+      color: black;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+    }
+
+    button:hover {
+      box-shadow: 0 0 15px #ff0077, 0 0 25px #00ffd2;
+      transform: scale(1.05);
+    }
+
+    /* Confirmation message */
+    .confirmation {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      background: rgba(0, 255, 210, 0.1);
+      border: 1px solid #00ffd2;
+      color: #00ffd2;
+      font-weight: bold;
+      display: none;
+      text-align: center;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Hotel Reservation</h1>
+  <div class="form-container">
+    <form id="reservationForm" novalidate>
+      <label for="name">Name :</label>
+      <input type="text" name="name" id="name" placeholder="Enter your name" required />
+
+      <label for="phno">Phone Number:</label>
+      <input type="text" name="phno" id="phno" placeholder="9876543210" required />
+
+      <label for="email">Email:</label>
+      <input type="email" name="email" id="email" placeholder="example@gmail.com" required />
+
+      <label for="date">Date:</label>
+      <input type="date" name="date" id="date" required />
+
+      <label for="time">Time:</label>
+      <input type="time" name="time" id="time" required />
+
+      <label for="people">No. of People:</label>
+      <input type="number" name="people" id="people" placeholder="e.g. 2" required max="10" min="1" />
+
+      <label>Type of Service:</label>
+      <div class="radio-group">
+        <label><input type="radio" name="service" value="regular" required /> Regular</label>
+        <label><input type="radio" name="service" value="business" /> Business</label>
+        <label><input type="radio" name="service" value="vip" /> VIP</label>
+      </div>
+
+      <button type="submit">Book Now</button>
+    </form>
+
+    <div class="confirmation" id="confirmationMessage">
+      ✅ Your reservation has been submitted successfully!
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("reservationForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      let errors = [];
+
+      const name = document.getElementById("name").value.trim();
+      if (name.length < 3) errors.push("Name must be at least 3 characters.");
+
+      const phone = document.getElementById("phno").value.trim();
+      const phonePattern = /^[0-9]{10}$/;
+      if (!phonePattern.test(phone)) errors.push("Enter a valid 10-digit phone number.");
+
+      const email = document.getElementById("email").value.trim();
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,}$/;
+      if (!emailPattern.test(email)) errors.push("Enter a valid email address.");
+
+      const dateValue = document.getElementById("date").value;
+      if (dateValue) {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const selectedDate = new Date(dateValue);
+        if (selectedDate < today) errors.push("Date cannot be in the past.");
+      } else {
+        errors.push("Please select a date.");
+      }
+
+      const time = document.getElementById("time").value;
+      if (!time) errors.push("Please select a time.");
+
+      const people = document.getElementById("people").value;
+      if (people < 1 || people > 10) errors.push("Number of people must be between 1 and 10.");
+
+      const service = document.querySelector('input[name="service"]:checked');
+      if (!service) errors.push("Please select a service type.");
+
+      if (errors.length > 0) {
+        alert(errors.join("\n"));
+      } else {
+        document.getElementById("confirmationMessage").style.display = "block";
+        this.reset();
+      }
+    });
+  </script>
+</body>
+</html>

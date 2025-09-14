@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🚀 Jeswin's Space Hub</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: radial-gradient(circle at top, #0b0f2e, #000010 80%);
+        color: #e0faff;
+        font-family: "Orbitron", sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 50px;
+        padding: 60px 20px;
+        overflow-x: hidden;
+      }
+
+      h1 {
+        font-size: 3rem;
+        text-align: center;
+        color: #38bdf8;
+        text-shadow: 0 0 20px #00eaff, 0 0 40px #009dff;
+        animation: flicker 3s infinite alternate;
+      }
+
+      h2 {
+        font-size: 1.6rem;
+        margin-top: 10px;
+        color: #f9fafb;
+        text-shadow: 0 0 15px #9e9e9e, 0 0 25px #6ecfff;
+        border-bottom: 2px solid #38bdf8;
+        padding-bottom: 6px;
+      }
+
+      .nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 25px;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 30px;
+        border-radius: 20px;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 0 25px rgba(0, 200, 255, 0.4);
+        width: 90%;
+        max-width: 1000px;
+        transform: perspective(1000px) rotateX(5deg);
+        transition: transform 0.6s ease-in-out;
+      }
+
+      .nav:hover {
+        transform: perspective(1000px) rotateX(0deg);
+      }
+
+      .nav a {
+        text-decoration: none;
+        background: linear-gradient(145deg, #0ea5e9, #2563eb, #9333ea);
+        color: white;
+        padding: 15px 28px;
+        border-radius: 14px;
+        font-weight: bold;
+        font-size: 1rem;
+        transition: all 0.4s ease-in-out;
+        box-shadow: 0 0 12px rgba(56, 189, 248, 0.6), 0 0 25px rgba(147, 51, 234, 0.5);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .nav a::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.15);
+        transition: 0.4s;
+      }
+
+      .nav a:hover::before {
+        left: 100%;
+      }
+
+      .nav a:hover {
+        transform: translateY(-6px) scale(1.08);
+        box-shadow: 0 0 25px rgba(56, 189, 248, 0.9), 0 0 45px rgba(147, 51, 234, 0.8);
+      }
+
+      @keyframes flicker {
+        from {
+          opacity: 1;
+        }
+        to {
+          opacity: 0.8;
+          text-shadow: 0 0 10px #009dff, 0 0 20px #9333ea;
+        }
+      }
+
+      /* Starfield effect */
+      .stars {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        background: transparent url("https://www.transparenttextures.com/patterns/stardust.png")
+          repeat;
+        animation: moveStars 200s linear infinite;
+      }
+
+      @keyframes moveStars {
+        from {
+          background-position: 0 0;
+        }
+        to {
+          background-position: -10000px 5000px;
+        }
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2.2rem;
+        }
+        h2 {
+          font-size: 1.2rem;
+        }
+        .nav {
+          gap: 15px;
+          padding: 20px;
+        }
+        .nav a {
+          padding: 12px 18px;
+          font-size: 0.9rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stars"></div>
+
+    <h1>🚀 Jeswin's Space Hub</h1>
+
+    <h2>🪐 Lab Programs</h2>
+    <div class="nav">
+      <a href="1stprg.html" target="_blank">👤 Profile</a>
+      <a href="2ndprg.html" target="_blank">📅 Timetable</a>
+      <a href="3rdprg.html" target="_blank">🍕 Reservation</a>
+      <a href="4thprg.html" target="_blank">📝 Job Form</a>
+      <a href="5thprg.html" target="_blank">🕸 CSS Concepts</a>
+      <a href="6thprg.html" target="_blank">😪 Css types</a>
+      <a href="8thprg.html" target="_blank">🐼 Leap year</a>
+      <a href="9thprg.html" target="_blank">🌡 Temp conveters</a>
+      <a href="10thprg.html" target="_blank">😷 Validation Programs</a>
+      <a href="dis-calculator/index.html" target="_blank">👀 Discount Calculator</a>
+
+    </div>
+
+    <h2>🛡 Validation Programs</h2>
+    <div class="nav">
+      <a href="ReservationFom.html" target="_blank">Reservation Form</a>
+      <a href="JobApp.html" target="_blank">Job form</a>
+    </div>
+
+    <h2>🛰 Practice Programs</h2>
+    <div class="nav">
+      <a href="./Practice programs/1st.html" target="_blank">1</a>
+      <a href="./Practice programs/2nd.html" target="_blank">2</a>
+      <a href="./Practice programs/3rd.html" target="_blank">3</a>
+      <a href="./Practice programs/4th.html" target="_blank">4</a>
+      <a href="./Practice programs/5th.html" target="_blank">5</a>
+      <a href="./Practice programs/6th.html" target="_blank">6</a>
+      <a href="./Practice programs/7th.html" target="_blank">7</a>
+      <a href="./Practice programs/8th.html" target="_blank">8</a>
+      <a href="./Practice programs/9th.html" target="_blank">9</a>
+      <a href="./Practice programs/10th.html" target="_blank">10</a>
+      <a href="./Practice programs/11th.html" target="_blank">11</a>
+      <a href="./Practice programs/12th.html" target="_blank">12</a>
+      <a href="./Practice programs/13th.html" target="_blank">13</a>
+      <a href="./Practice programs/14th.html" target="_blank">14</a>
+      <a href="./Practice programs/15th.html" target="_blank">15</a>
+    </div>
+  </body>
+</html>

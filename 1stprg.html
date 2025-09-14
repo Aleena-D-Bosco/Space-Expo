@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Jeswin — Space Portfolio</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=VT323&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#000009;
+      --neon1:#00ffd2;
+      --neon2:#9b59ff;
+      --muted:#00ff2696;
+      --card-bg: rgba(255,255,255,0.03);
+      --glass: rgba(255,255,255,0.04);
+    }
+
+    /* Reset & layout */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: 'VT323', 'Trebuchet MS', Arial, sans-serif;
+      background: radial-gradient(ellipse at 20% 10%, rgba(155,89,255,0.06), transparent 10%),
+                  radial-gradient(ellipse at 80% 90%, rgba(0,255,210,0.03), transparent 10%),
+                  var(--bg);
+      color:var(--muted);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow-y: auto;
+    }
+
+    /* Starfield canvas */
+    #starfield{position:fixed;inset:0;z-index:0}
+
+    /* Main container */
+    .wrap{
+      position:relative;
+      z-index:2;
+      max-width:1000px;
+      margin:40px auto;
+      padding:36px;
+      border-radius:12px;
+      backdrop-filter: blur(6px) saturate(120%);
+    }
+
+    /* Header / Neon logo */
+    header{
+      display:flex;
+      gap:20px;
+      align-items:center;
+      margin-bottom:20px;
+    }
+    .avatar{
+      width:120px;height:120px;border-radius:50%;
+      background:linear-gradient(135deg,var(--neon2),var(--neon1));
+      display:flex;align-items:center;justify-content:center;
+      box-shadow: 0 0 18px rgba(155,89,255,0.14), inset 0 -6px 24px rgba(0,0,0,0.6);
+      flex-shrink:0;
+      font-family: 'Orbitron', sans-serif;
+      font-weight:700;
+      color:#011;
+      font-size:26px;
+      letter-spacing:1px;
+    }
+    .title{
+      flex:1;
+    }
+    .title h1{
+      margin:0;
+      font-family: 'Orbitron', sans-serif;
+      font-size:44px;
+      color:var(--neon1);
+      text-shadow: 0 0 12px rgba(0,255,210,0.18), 0 6px 10px rgba(0,0,0,0.6);
+    }
+    .subtitle{
+      margin:6px 0 0 0;
+      color:rgba(155,255,200,0.75);
+      font-size:15px;
+    }
+
+    /* glowing panel style */
+    .panel{
+      margin-top:18px;
+      padding:20px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.01));
+      border:1px solid rgba(0,255,210,0.06);
+      box-shadow: 0 6px 30px rgba(0,0,0,0.6), 0 0 20px rgba(155,89,255,0.02);
+      border-radius:10px;
+    }
+    h2{
+      font-family: 'Orbitron', sans-serif;
+      color:var(--neon2);
+      margin:0 0 12px 0;
+      font-size:20px;
+    }
+
+    p, li { color: rgba(0,255,38,0.8); line-height:1.45; font-size:16px; }
+
+    /* Two-column layout where appropriate */
+    .grid-2{
+      display:grid;
+      grid-template-columns: 1fr 320px;
+      gap:18px;
+      align-items:start;
+    }
+
+    /* Repo cards */
+    .repos{
+      display:grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px,1fr));
+      gap:14px;
+      margin-top:12px;
+    }
+    .repo{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:10px;
+      padding:12px;
+      border:1px solid rgba(0,255,210,0.06);
+      transition: transform .18s ease, box-shadow .18s ease;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    .repo:hover{ transform: translateY(-6px); box-shadow: 0 14px 40px rgba(0,0,0,0.7), 0 0 28px rgba(155,89,255,0.06); }
+    .repo h3{ margin:0; color:var(--neon1); font-family: 'Orbitron', sans-serif; font-size:16px; }
+    .repo p{ margin:8px 0 0 0; color: rgba(0,255,38,0.65); font-size:13px; min-height:36px; }
+    .repo .meta{ margin-top:10px; display:flex; gap:8px; align-items:center; font-size:13px; color:rgba(155,255,200,0.7); }
+    .btn{
+      display:inline-block;padding:8px 12px;border-radius:8px;background:linear-gradient(90deg,var(--neon1),var(--neon2));
+      color:#021; font-weight:700; text-decoration:none; font-size:13px; margin-top:10px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+    }
+
+    /* Terminal-like about box */
+    .terminal{
+      background: linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.55));
+      border-radius:8px;
+      padding:14px;
+      font-family: 'VT323', monospace;
+      font-size:18px;
+      color:var(--muted);
+      border:1px solid rgba(0,255,38,0.06);
+    }
+
+    /* Footer */
+    footer{ margin-top:22px; text-align:center; color:rgba(0,255,38,0.35); font-size:13px; }
+
+    /* CRT Scanlines overlay */
+    .scanlines{
+      pointer-events:none;
+      position:fixed; inset:0;
+      background-image: linear-gradient(rgba(0,0,0,0.02) 50%, rgba(255,255,255,0.01) 50%);
+      background-size:100% 4px;
+      mix-blend-mode:overlay; z-index:3;
+    }
+
+    /* small screens */
+    @media (max-width:880px){
+      .grid-2{ grid-template-columns: 1fr; }
+      header{flex-direction:row;gap:12px}
+      .avatar{width:88px;height:88px;font-size:20px}
+      .title h1{font-size:28px}
+    }
+  </style>
+</head>
+<body>
+  <!-- Starfield canvas -->
+  <canvas id="starfield"></canvas>
+
+  <!-- CRT scanlines -->
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <main class="wrap">
+    <header>
+      <!-- Avatar: replace with <img src="..." /> if you have a photo -->
+      <div class="avatar" title="Jeswin">JZ</div>
+
+      <div class="title">
+        <h1>Jeswin — Explorer of Code</h1>
+        <div class="subtitle">Space-themed retro portfolio — 2nd year BCA student at St. Joseph University</div>
+      </div>
+
+      <!-- Quick contact (edit links) -->
+      <div style="text-align:right">
+        <!-- Replace hrefs with actual links -->
+        <a class="btn" href="mailto:jeswin@example.com" style="display:inline-block;margin-bottom:6px">Contact</a><br/>
+        <a class="btn" href="https://github.com/YOUR_GITHUB_USERNAME" id="githubBtn" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </header>
+
+    <section class="grid-2">
+      <!-- Left column -->
+      <div>
+        <div class="panel">
+          <h2>Astronaut Log — About</h2>
+          <div class="terminal">
+            <!-- About text: updated from original submission, tweak as you like -->
+            Hello. I'm <strong>Jeswin</strong>. I'm a Computer Science student at <strong>St. Joseph's University</strong>, currently in my 2nd year of BCA. I'm focused on building, exploring, and learning practical projects and lab works. I enjoy turning ideas into small missions — one commit at a time.
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:14px;">
+          <h2>Education Details</h2>
+          <ul style="margin:0;padding-left:18px;color:rgba(0,255,38,0.85);">
+            <li><strong>2022</strong> — Completed schooling from <strong>Jubilee English High School</strong> — 89%</li>
+            <li><strong>2024</strong> — PUC from <strong>St. Joseph's Indian Composite PU College</strong> — 92%</li>
+            <li><strong>Present</strong> — Pursuing BCA at <strong>St. Joseph's University</strong></li>
+          </ul>
+        </div>
+
+        <div class="panel" style="margin-top:14px;">
+          <h2>Hobbies</h2>
+          <ul style="margin:0;padding-left:18px;color:rgba(0,255,38,0.85);">
+            <li>Watching mystery videos on YouTube</li>
+            <li>Playing chess (I never win)</li>
+            <li>Thinking of doing projects (thinking forever)</li>
+            <li>Doing random things (I can name all the countries in Africa 😏)</li>
+          </ul>
+        </div>
+
+        <div class="panel" style="margin-top:14px;">
+          <h2>Achievements (or things I am proud of)</h2>
+          <ul style="margin:0;padding-left:18px;color:rgba(0,255,38,0.85);">
+            <li>I sleep before 12am 🗿</li>
+            <li>I never get late to places</li>
+            <li>Not addicted to Instagram</li>
+            <li>Survived a deadly virus</li>
+          </ul>
+        </div>
+
+        <div class="panel" style="margin-top:14px;">
+          <h2>My Ideals</h2>
+          <ul style="margin:0;padding-left:18px;color:rgba(0,255,38,0.85);">
+            <li>Pain of regret &gt; Pain of failure</li>
+            <li>Think carefully before you speak</li>
+            <li>Don't be ashamed of being alone</li>
+            <li>We suffer more often in imagination than in reality.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Right column: GitHub Labworks + quick links -->
+      <aside>
+        <div class="panel">
+          <h2>Space Archives — Labworks</h2>
+          <p style="margin:0;color:rgba(155,255,200,0.8);font-size:14px">
+            Public repositories from your GitHub account. Set <code>GITHUB_USERNAME</code> in the script at the bottom of this file.
+          </p>
+
+          <div id="repos" class="repos" style="margin-top:12px;">
+            <!-- Repo cards injected here -->
+            <div style="grid-column:1/-1;color:rgba(155,255,200,0.5);font-size:13px" id="repoStatus">Loading repos…</div>
+          </div>
+
+          <div style="margin-top:12px;">
+            <a class="btn" href="#" id="viewAllBtn" target="_blank" rel="noopener">View on GitHub</a>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:14px;">
+          <h2>Quick Links</h2>
+          <ul style="margin:0;padding-left:14px;color:rgba(155,255,200,0.85);font-size:15px">
+            <li><a href="https://github.com/YOUR_GITHUB_USERNAME" id="githubLink" style="color:var(--neon1)">GitHub Profile</a></li>
+            <li><a href="#" style="color:var(--neon1)">LinkedIn (optional)</a></li>
+            <li><a href="mailto:jeswin@example.com" style="color:var(--neon1)">Email</a></li>
+          </ul>
+        </div>
+
+      </aside>
+    </section>
+
+    <footer>
+      <small>Made with ♥ in a little corner of the cosmos · Retro-space theme</small>
+    </footer>
+  </main>
+
+  <script>
+    /***********************************
+     * Configuration - edit these values
+     ***********************************/
+    const GITHUB_USERNAME = 'YOUR_GITHUB_USERNAME'; // <<--- put your GitHub username here
+    const MAX_REPOS = 12;
+
+    // GitHub API helper
+    async function fetchRepos(user){
+      if(!user || user === 'YOUR_GITHUB_USERNAME') return null;
+      const url = `https://api.github.com/users/${encodeURIComponent(user)}/repos?per_page=100&sort=updated`;
+      const res = await fetch(url);
+      if(!res.ok) { throw new Error('GitHub API error: ' + res.status); }
+      const data = await res.json();
+      return data;
+    }
+
+    // Render repo cards
+    function createRepoCard(r){
+      const el = document.createElement('div');
+      el.className = 'repo';
+      el.innerHTML = `
+        <h3>${escapeHtml(r.name)}</h3>
+        <p>${escapeHtml(r.description || 'No description')}</p>
+        <div class="meta">
+          <span>★ ${r.stargazers_count}</span>
+          <span>•</span>
+          <span>${new Date(r.updated_at).toLocaleDateString()}</span>
+          <a class="btn" href="${r.html_url}" target="_blank" rel="noopener" style="margin-left:auto;font-size:12px">Open</a>
+        </div>
+      `;
+      return el;
+    }
+
+    // Small helper to avoid simple XSS for inserted repo fields
+    function escapeHtml(s){
+      return String(s)
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;')
+        .replace(/'/g,'&#039;');
+    }
+
+    async function loadAndShowRepos(){
+      const status = document.getElementById('repoStatus');
+      const container = document.getElementById('repos');
+      const viewAllBtn = document.getElementById('viewAllBtn');
+      const githubLink = document.getElementById('githubLink');
+      const githubBtn = document.getElementById('githubBtn');
+
+      if(!GITHUB_USERNAME || GITHUB_USERNAME === 'YOUR_GITHUB_USERNAME'){
+        status.textContent = 'Set your GitHub username in the page script to load labworks.';
+        viewAllBtn.href = '#';
+        githubLink.href = 'https://github.com/';
+        githubBtn.href = 'https://github.com/';
+        return;
+      }
+
+      try{
+        status.textContent = 'Fetching repos...';
+        const repos = await fetchRepos(GITHUB_USERNAME);
+
+        if(!repos || repos.length === 0){
+          status.textContent = 'No public repos found for this username.';
+          viewAllBtn.href = `https://github.com/${GITHUB_USERNAME}`;
+          githubLink.href = `https://github.com/${GITHUB_USERNAME}`;
+          githubBtn.href = `https://github.com/${GITHUB_USERNAME}`;
+          return;
+        }
+
+        // Prioritize repos that look like labs
+        const labMatches = repos.filter(r => {
+          const name = (r.name || '').toLowerCase();
+          const desc = (r.description || '').toLowerCase();
+          return name.includes('lab') || name.includes('labwork') || desc.includes('lab') || desc.includes('labwork') || name.includes('practical');
+        });
+
+        // Decide which list to show: labs first, fallback to top updated
+        const finalList = (labMatches.length ? labMatches : repos).slice(0, MAX_REPOS);
+
+        // Clear & inject
+        container.innerHTML = '';
+        finalList.forEach(r => container.appendChild(createRepoCard(r)));
+
+        viewAllBtn.href = `https://github.com/${GITHUB_USERNAME}?tab=repositories`;
+        githubLink.href = `https://github.com/${GITHUB_USERNAME}`;
+        githubBtn.href = `https://github.com/${GITHUB_USERNAME}`;
+
+      }catch(err){
+        console.error(err);
+        status.textContent = 'Failed to fetch repos — try again later or add a GitHub token for higher rate limits.';
+      }
+    }
+
+    // Starfield canvas effect
+    (function starfield(){
+      const canvas = document.getElementById('starfield');
+      const ctx = canvas.getContext('2d');
+      let w = canvas.width = innerWidth;
+      let h = canvas.height = innerHeight;
+      const stars = [];
+      const STAR_COUNT = Math.floor((w*h)/8000);
+
+      function rand(min,max){return Math.random()*(max-min)+min}
+
+      for(let i=0;i<STAR_COUNT;i++){
+        stars.push({
+          x: Math.random()*w,
+          y: Math.random()*h,
+          z: rand(0.2,1),
+          r: rand(0.3,1.6),
+          vx: rand(-0.05,0.05),
+          vy: rand(-0.02,0.02)
+        });
+      }
+
+      function resize(){ w = canvas.width = innerWidth; h = canvas.height = innerHeight; }
+      addEventListener('resize', resize);
+
+      function draw(){
+        ctx.clearRect(0,0,w,h);
+        // faint nebula glow
+        const g = ctx.createLinearGradient(0,0,w,h);
+        g.addColorStop(0, 'rgba(155,89,255,0.02)');
+        g.addColorStop(1, 'rgba(0,255,210,0.01)');
+        ctx.fillStyle = g;
+        ctx.fillRect(0,0,w,h);
+
+        for(const s of stars){
+          s.x += s.vx * (s.z*1.2);
+          s.y += s.vy * (s.z*1.2);
+
+          // wrap
+          if(s.x < 0) s.x = w;
+          if(s.x > w) s.x = 0;
+          if(s.y < 0) s.y = h;
+          if(s.y > h) s.y = 0;
+
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(255,255,255,${0.6 * s.z})`;
+          ctx.arc(s.x, s.y, s.r * (1 + s.z), 0, Math.PI*2);
+          ctx.fill();
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
+    // Kick off repo load
+    loadAndShowRepos();
+  </script>
+</body>
+</html>
